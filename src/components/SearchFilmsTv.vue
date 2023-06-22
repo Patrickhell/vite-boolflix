@@ -9,7 +9,7 @@
  <script>
  
  export default {
-     name: 'SearchFilms',
+     name: 'SearchFilmsTv',
      
      data(){
          return{
