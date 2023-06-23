@@ -1,33 +1,35 @@
 
 <template>
     <SearchFilmsTv @searched ="RequestSend"/>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-6" v-for= "elements in filmsList">
-              <h3><strong> FILM Title :</strong> {{elements.title}} </h3>    
-              <h4><strong>ORIGINAL Title FILM :</strong>{{elements.original_title}}</h4> 
-              <div>
+    <div class="films">
+        <div  v-for= "elements in filmsList">
+            <img :src="generateUrlImage(elements.poster_path)" alt="path_imageFilm"> 
+            <p><strong> FILM Title :</strong> {{elements.title}} </p>    
+            <p><strong>ORIGINAL Title FILM :</strong>{{elements.original_title}}</p> 
+            <div>
                 <span><strong> FILM Language :</strong></span>
                 <img  :src="getFlag(elements.original_language)" alt="FLAG IMAGE NOT FOUND" 
                 style="width: 30px; color: brown;">
-              </div> 
-              <p><strong> FILM Vote Average :</strong>{{elements.vote_average}}</p> 
-            </div>
+            </div> 
+            <p><strong> FILM Vote Average :</strong>{{elements.vote_average}}</p> 
+        </div>
 
-            <div class="col-6" v-for= "seriesTv in tvList">
-              <h3><strong>Serie Title :</strong> {{seriesTv.name}} </h3>    
-              <h4><strong>ORIGINAL Title Serie :</strong>{{seriesTv.original_name}}</h4> 
-              <div>
+        <div v-for= "seriesTv in tvList">
+            <img :src="generateUrlImage(seriesTv.poster_path)" alt="path_imageSerie"> 
+            <p><strong>Serie Title :</strong> {{seriesTv.name}} </p>    
+            <p><strong>ORIGINAL Title Serie :</strong>{{seriesTv.original_name}}</p> 
+            <div>
                 <span><strong> SERIE Language  :</strong></span>
                 <img  :src="getFlag(seriesTv.original_language)" alt="FLAG IMAGE NOT FOUND" 
                 style="width: 30px; color: brown;">
-              </div> 
-              <p><strong> Serie Vote Average :</strong>{{seriesTv.vote_average}}</p> 
-            </div>
-
+            </div> 
+            <p><strong> Serie Vote Average :</strong>{{seriesTv.vote_average}}</p> 
         </div>
+
+    </div>
+       
         
-    </div> 
+
        
         
 </template>
@@ -50,6 +52,7 @@ export default {
             apiKey: 'de022abc3aaf072b21a84064d6a6134a',
             filmsList: [],
             tvList:[],
+    
 
         }
     },
@@ -82,9 +85,16 @@ export default {
         getFlag(initials_flag) {
            
             if (initials_flag === 'en' ) initials_flag = 'gb'
-            let images = 'https://www.bandiere-mondo.it/data/flags/w702/' + initials_flag + '.webp';
-               return images
+            let imagesFlag = 'https://www.bandiere-mondo.it/data/flags/w702/' + initials_flag + '.webp';
+               return imagesFlag
         },
+
+        generateUrlImage(Pathposter) {
+
+            let partialUrl = 'https://image.tmdb.org/t/p/w185' + Pathposter;
+            return partialUrl
+
+        }
 
        
     },
