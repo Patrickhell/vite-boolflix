@@ -2,7 +2,7 @@
 <template>
     <SearchFilmsTv @searched ="RequestSend"/>
     <div class="films">
-        <div  v-for= "elements in filmsList">
+        <div  v-for= "elements in filmsList" :key ="elements">
             <img :src="generateUrlImage(elements.poster_path)" alt="path_imageFilm"> 
             <p><strong> FILM Title :</strong> {{elements.title}} </p>    
             <p><strong>ORIGINAL Title FILM :</strong>{{elements.original_title}}</p> 
@@ -11,10 +11,19 @@
                 <img  :src="getFlag(elements.original_language)" alt="FLAG IMAGE NOT FOUND" 
                 style="width: 30px; color: brown;">
             </div> 
-            <p><strong> FILM Vote Average :</strong>{{elements.vote_average}}</p> 
+            <div class="d-flex">
+                <p>
+                    <strong> Film Vote Average :</strong>
+            
+                </p>
+                <div v-for="n in 10" :key="n">
+                    <i  class ="fa-star" :class="( Math.trunc(Math.ceil(elements.vote_average))) ?'fa-solid' : 'fa-regular'"></i> 
+                </div>
+            
+            </div>
         </div>
 
-        <div v-for= "seriesTv in tvList">
+        <div v-for= "seriesTv in tvList" :key ="seriesTv">
             <img :src="generateUrlImage(seriesTv.poster_path)" alt="path_imageSerie"> 
             <p><strong>Serie Title :</strong> {{seriesTv.name}} </p>    
             <p><strong>ORIGINAL Title Serie :</strong>{{seriesTv.original_name}}</p> 
@@ -23,8 +32,21 @@
                 <img  :src="getFlag(seriesTv.original_language)" alt="FLAG IMAGE NOT FOUND" 
                 style="width: 30px; color: brown;">
             </div> 
-            <p><strong> Serie Vote Average :</strong>{{seriesTv.vote_average}}</p> 
+            
+                
+
+            <div class="d-flex">
+                <p>
+                    <strong> Serie Vote Average :</strong>
+            
+                </p>
+                <div v-for="n in 5" :key="n">
+                    <i  class ="fa-star" :class="( n <= Math.trunc(Math.ceil(seriesTv.vote_average/2)))? 'fa-solid':'fa-regular'"></i> 
+                </div>
+            
+            </div>
         </div>
+        
 
     </div>
        
@@ -52,6 +74,8 @@ export default {
             apiKey: 'de022abc3aaf072b21a84064d6a6134a',
             filmsList: [],
             tvList:[],
+          
+
     
 
         }
@@ -94,7 +118,8 @@ export default {
             let partialUrl = 'https://image.tmdb.org/t/p/w185' + Pathposter;
             return partialUrl
 
-        }
+        },
+
 
        
     },
@@ -110,5 +135,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ul{
+    list-style-type: none;
+}
 
 </style>
